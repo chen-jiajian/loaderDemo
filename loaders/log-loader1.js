@@ -1,5 +1,6 @@
 
 module.exports = function (source) {
-    console.log('log-loader 1');
+    source = source.replace(/console.*\)/, '')
+    console.log('去除console');
     return source
 }

@@ -1,5 +1,6 @@
 
 module.exports = function (source) {
-    console.log('log-loader 2222');
+    source = source.replace(/debugger/, '')
+    console.log('去除debugger');
     return source
 }

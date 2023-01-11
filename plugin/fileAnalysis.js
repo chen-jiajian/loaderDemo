@@ -3,12 +3,17 @@ const fsPromise = require('fs/promises')
 const fs = require('fs')
 module.exports = class Analysis {
     fileStr;
-    constructor (options) {
-        this.options = options
-        this.analysis()
-    }
-    apply () {
-        console.log('apply', this.options)
+    apply (compiler) {
+        console.log('fileAnalysisPlugins启动')
+        // 钩子事件，编译之前
+        // tap 表示注册同步hooks
+        // tapAysnc表示注册callback方式
+        // tapPromise表示以promise方式注册异步hook
+        compiler.hooks.beforeCompile.tapAsync('MyPlugin', (params, callback) => {
+            this.analysis().then(() => {
+                callback()
+            })
+        })
     }
     filePath () {
         return path.join(__dirname, '../src/file/index.html')
